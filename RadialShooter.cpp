@@ -1,36 +1,43 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
+
+#include "PlayState.h"
 
 int main()
 {
-    // create the window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "RadialShooter", sf::Style::Close | sf::Style::Titlebar);
-    sf::Texture bossGuyTexture;
-    bossGuyTexture.loadFromFile("resources/sprites/testBaddie_spr_0.png");
-    sf::Sprite bossGuySprite(bossGuyTexture);
-    bossGuySprite.setPosition(window.getSize().x/2-64, window.getSize().y/2-64);
+	// create the window
+	sf::RenderWindow window(sf::VideoMode(800, 600), "RadialShooter",
+			sf::Style::Close | sf::Style::Titlebar);
 
-    // run the program as long as the window is open
-    while (window.isOpen())
-    {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+	sf::Clock gameClock;
 
-        // clear the window with black color
-        window.clear(sf::Color::Black);
+	const double tickRate = 1.0f / 60.0f;
 
-        // draw everything here...
-        // window.draw(...);
-        window.draw(bossGuySprite);
+	double currentTime = gameClock.getElapsedTime().asSeconds();
+	double accumulator = 0.0;
 
-        // end the current frame
-        window.display();
-    }
+	PlayState playState;
+	playState.Init(&window);
 
-    return 0;
+	// run the program as long as the window is open
+	while (window.isOpen())
+	{
+		// check all the window's events that were triggered since the last iteration of the loop
+		playState.HandleEvents(&window);
+
+		double newTime = gameClock.getElapsedTime().asSeconds();
+		double frameTime = newTime - currentTime;
+		currentTime = newTime;
+
+		accumulator += frameTime;
+
+		while (accumulator >= tickRate)
+		{
+			playState.Update(&window, tickRate);
+			accumulator -= tickRate;
+		}
+
+		playState.Render(&window);
+	}
+	return 0;
 }
