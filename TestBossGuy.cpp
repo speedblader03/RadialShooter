@@ -7,7 +7,7 @@ TestBossGuy::TestBossGuy()
 
 void TestBossGuy::Update(double tickrate)
 {
-	setRotation(getRotation() + tickrate * 60);
+	rotate(tickrate * 60);
 }
 
 TestBossGuy::~TestBossGuy()

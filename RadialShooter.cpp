@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <vector>
 
 #include "PlayState.h"
 
@@ -16,8 +15,7 @@ int main()
 	double currentTime = gameClock.getElapsedTime().asSeconds();
 	double accumulator = 0.0;
 
-	PlayState playState;
-	playState.Init(&window);
+	PlayState playState(&window);
 
 	// run the program as long as the window is open
 	while (window.isOpen())

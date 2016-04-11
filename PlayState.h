@@ -3,12 +3,13 @@
 
 #include "GameState.h"
 #include "TestBossGuy.h"
+#include "Player.h"
 
 class PlayState: public GameState
 {
 public:
-	//PlayState();
-	void Init(sf::RenderWindow* rw);
+	PlayState(sf::RenderWindow* rw);
+	//void Init(sf::RenderWindow* rw);
 	//get rid of things in memory, unload things
 	void Cleanup();
 
@@ -27,7 +28,9 @@ public:
 
 private:
 	TestBossGuy bossGuy;
+	Player player;
 	sf::Texture bossGuyTexture;
+	sf::Texture playerTexture;
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
 	}
 
 	//load stuff (textures, etc), initialize things
-	virtual void Init(sf::RenderWindow* rw) = 0;
+	//virtual void Init(sf::RenderWindow* rw) = 0;
 	//get rid of things in memory, unload things
 	virtual void Cleanup() = 0;
 
